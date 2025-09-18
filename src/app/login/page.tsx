@@ -40,7 +40,7 @@ const Login = async () => {
                 <Label>Email</Label>
                 <Input placeholder="hello@hello.com" name="email" type="email" required />
               </div>
-              <SubmitButton/>
+              <SubmitButton text="Login"/>
             </form>
           </CardContent>
         </Card>

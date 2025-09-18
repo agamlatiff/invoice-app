@@ -2,10 +2,19 @@ import type { ReactNode } from "react";
 import { requireUser } from "../utils/hooks";
 import Link from "next/link";
 import Image from "next/image";
-import {Menu, User } from "lucide-react";
+import { Menu, User, User2 } from "lucide-react";
 import DashboardLinks from "../components/DashboardLinks";
 import { Button } from "@/components/ui/button";
-import { DropdownMenuContent ,  DropdownMenu, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+} from "@/components/ui/dropdown-menu";
+import { signOut } from "../utils/auth";
 
 export default async function DashboardLayout({
   children,
@@ -22,33 +31,71 @@ export default async function DashboardLayout({
             <div className="h-14 flex items-center border-b px-4 lg:h-[60px] lg:px-6">
               <Link href={"/"} className="flex items-center gap-2">
                 {/* <Image src={''} className="size-7" alt="Logo" /> */}
-                <User className="size-7 text-blue-600"/>
-                <p className="text-2xl font-bold">Invoice<span className="text-blue-500">Agam</span></p>
+                <User className="size-7 text-blue-600" />
+                <p className="text-2xl font-bold">
+                  Invoice<span className="text-blue-500">Agam</span>
+                </p>
               </Link>
             </div>
             <div className="flex-1">
               <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-                <DashboardLinks/>
+                <DashboardLinks />
               </nav>
             </div>
           </div>
         </div>
-        
+
         <div className="flex flex-col">
           <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant={'outline'} size='icon' className="md:hidden">
-                  <Menu className="size-5"/>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant={"outline"} size="icon" className="md:hidden">
+                  <Menu className="size-5" />
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              </SheetTrigger>
+              <SheetContent side="left">
                 <nav className="grid gap-2 mt-10">
-                  <DashboardLinks/>
+                  <DashboardLinks />
                 </nav>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </SheetContent>
+            </Sheet>
+
+            <div className="flex items-center ml-auto">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    className="rounded-full"
+                    variant={"outline"}
+                    size={"icon"}
+                  >
+                    <User2 />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href={"/dashboard"}>Dashboard</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href={"/dashboard/invoices"}>Invoices</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <form action={async () => {
+                      "use server"
+                      await  signOut()
+                    }} className="w-full">
+                      <button className="w-full text-left">Log out</button>
+                    </form>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </header>
+          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg-p-6">
+            {children}
+          </main>
         </div>
       </div>
     </>
