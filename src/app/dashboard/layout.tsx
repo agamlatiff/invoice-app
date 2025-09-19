@@ -16,12 +16,33 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "../utils/auth";
 
+import { redirect } from "next/navigation";
+import { prisma } from "../utils/db";
+
+async function getUser(userId: string) {
+  const data = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      firstName: true,
+      lastName: true,
+      address: true,
+    },
+  });
+
+  if (!data?.firstName || !data?.lastName || !data?.address) {
+    redirect("/onboarding");
+  }
+}
+
 export default async function DashboardLayout({
   children,
 }: {
   children: ReactNode;
 }) {
   const session = await requireUser();
+  const data = await getUser(session.user?.id! as string);
 
   return (
     <>
@@ -82,10 +103,13 @@ export default async function DashboardLayout({
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <form action={async () => {
-                      "use server"
-                      await  signOut()
-                    }} className="w-full">
+                    <form
+                      action={async () => {
+                        "use server";
+                        await signOut();
+                      }}
+                      className="w-full"
+                    >
                       <button className="w-full text-left">Log out</button>
                     </form>
                   </DropdownMenuItem>
