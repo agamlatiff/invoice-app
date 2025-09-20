@@ -100,7 +100,7 @@ model Invoice {
   clientName    String
   clientEmail   String
   clientAddress String
-  currency      Int
+  currency      String
   invoiceNumber Int
   note          String?
 

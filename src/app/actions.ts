@@ -5,6 +5,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { invoiceSchema, onboardingSchema } from "./utils/zodSchemas";
 import { prisma } from "./utils/db";
 import { redirect } from "next/navigation";
+import { emailClient } from "./utils/mailtrap";
 
 export async function onboardUser(prevState: any, formData: FormData) {
   const session = await requireUser();
@@ -55,7 +56,7 @@ export async function createInvoice(prevState: any, formdata: FormData) {
       fromAddress: submission.value.fromAddress,
       fromEmail: submission.value.fromEmail,
       fromName: submission.value.fromName,
-      invoiceItemDescription: submission.value.invoiceDescription,
+      invoiceItemDescription: submission.value.invoiceItemDescription,
       invoiceItemQuantity: submission.value.invoiceItemQuantity,
       invoiceItemRate: submission.value.invoiceItemRate,
       invoiceName: submission.value.invoiceName,
@@ -63,6 +64,22 @@ export async function createInvoice(prevState: any, formdata: FormData) {
       note: submission.value.note,
       status: submission.value.status,
       total: submission.value.total,
+      userId: session.user?.id,
     },
   });
+
+  const sender = {
+    email: "hello@example.com",
+    name: "Agam Latifullah  ",
+  };
+
+  emailClient.send({
+    from: sender,
+    to: [{ email: "agamlatifullah123@gmail.com" }],
+    subject: "You are awesome!",
+    text: "Congrats for sending test email with Mailtrap!",
+    category: "Integration Test",
+  });
+
+  return redirect("/dashboard/invoices");
 }
