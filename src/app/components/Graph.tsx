@@ -17,6 +17,8 @@ interface iAppProps {
 }
 
 const Graph = ({data}: iAppProps) => {
+  
+  console.log(data)
   return (
     <ChartContainer
       config={{
@@ -35,7 +37,7 @@ const Graph = ({data}: iAppProps) => {
           <Line
             type={"monotone"}
             dataKey={"amount"}
-            stroke="var(--color-chart-3)"
+            stroke="var(--color-chart-1)"
             strokeWidth={2}
           />
         </LineChart>
