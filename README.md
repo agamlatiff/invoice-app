@@ -1,144 +1,96 @@
-InvoiceAgam - Easy Invoicing Application
-InvoiceAgam is a modern, full-stack web application built with Next.js that simplifies the process of creating, managing, and tracking invoices. It provides a user-friendly dashboard to get a quick overview of your finances, manage clients, and ensure you get paid on time.
+# InvoiceAgam
 
-✨ Features
-Secure Authentication: Magic link login using NextAuth.js and Nodemailer.
+InvoiceAgam is a web application designed to simplify the invoicing process. It allows users to easily create, manage, and track their invoices, ensuring timely payments. This project is built with Next.js and utilizes a range of modern technologies to provide a seamless user experience.
 
-Onboarding Flow: A simple setup process for new users to enter their details.
+## Features
 
-Intuitive Dashboard: At-a-glance view of key metrics:
+  - **User Authentication**: Secure login and user management system using NextAuth.js for email-based authentication.
+  - **Dashboard Overview**: An intuitive dashboard that provides a summary of total revenue, number of invoices issued, and the status of paid and pending invoices.
+  - **Invoice Management**:
+      - **Create, Edit, and Delete Invoices**: A comprehensive set of tools for complete invoice lifecycle management.
+      - **Dynamic Invoice Generation**: Invoices are created with detailed information, including client details, item descriptions, rates, quantities, and totals.
+      - **Status Tracking**: Invoices can be marked as 'Paid' or 'Pending', with visual indicators for easy tracking.
+  - **Financial Insights**:
+      - **Revenue Tracking**: The dashboard displays the total revenue generated from all invoices.
+      - **Graphical Representation**: A line graph shows paid invoices over the last 30 days, providing a visual representation of income trends.
+      - **Recent Invoices List**: A list of recent invoices is available on the dashboard for quick access and review.
+  - **Email Functionality**:
+      - **Payment Reminders**: Users can send reminder emails for pending invoices directly from the application.
+  - **PDF Generation**:
+      - **Downloadable Invoices**: Invoices can be downloaded as PDF files for record-keeping or for sending to clients.
+  - **User-Friendly Interface**:
+      - **Onboarding Process**: A simple onboarding process for new users to set up their accounts.
+      - **Responsive Design**: The application is designed to be fully responsive and accessible on various devices.
+      - **Customizable UI Components**: Utilizes shadcn/ui for a set of reusable and customizable UI components.
 
-Total Revenue
+## Tech Stack
 
-Total Invoices Issued
+  - **Framework**: Next.js
+  - **Styling**: Tailwind CSS
+  - **UI Components**: shadcn/ui
+  - **Authentication**: NextAuth.js
+  - **Database**: Prisma with PostgreSQL
+  - **Form Management**: Conform
+  - **Schema Validation**: Zod
+  - **Email Service**: Mailtrap
+  - **PDF Generation**: jsPDF
+  - **Charting Library**: Recharts
 
-Paid vs. Pending Invoices count
+## Getting Started
 
-Interactive Graph: Visualize paid invoices over the last 30 days with a clean line chart.
+To get a local copy up and running, follow these simple steps.
 
-Full Invoice Management (CRUD):
+### Prerequisites
 
-Create: An easy-to-use form to create detailed invoices with items, rates, and quantities.
+  - Node.js (version 20 or higher)
+  - pnpm (or your preferred package manager)
 
-Read: View all your invoices in a clean, sortable table.
+### Installation
 
-Update: Edit existing invoices with ease.
+1.  Clone the repo
+    ```sh
+    git clone https://github.com/agamlatiff/invoice-app.git
+    ```
+2.  Install NPM packages
+    ```sh
+    pnpm install
+    ```
+3.  Set up your environment variables by creating a `.env` file in the root of the project and adding the necessary variables (e.g., `DATABASE_URL`, `EMAIL_SERVER_HOST`, etc.).
 
-Delete: Safely delete invoices with confirmation.
+### Running the Application
 
-Status Tracking: Mark invoices as "Paid" to keep your records up-to-date.
+Once the installation is complete, you can run the development server:
 
-PDF Generation: Dynamically generate and download professional-looking PDF versions of your invoices.
-
-Email Reminders: Send payment reminders to clients for pending invoices directly from the app.
-
-Responsive Design: A clean, responsive UI that works seamlessly on desktop and mobile devices.
-
-🛠️ Tech Stack
-Framework: Next.js (with App Router)
-
-Styling: Tailwind CSS
-
-UI Components: shadcn/ui
-
-Database ORM: Prisma
-
-Database: PostgreSQL
-
-Authentication: NextAuth.js
-
-Form Handling: Conform
-
-Schema Validation: Zod
-
-Email Service: Mailtrap & Nodemailer
-
-PDF Generation: jsPDF
-
-Charting: Recharts
-
-Notifications: Sonner
-
-🚀 Getting Started
-Follow these instructions to get a local copy of the project up and running for development and testing purposes.
-
-Prerequisites
-Node.js (v20.x or later recommended)
-
-pnpm (or your preferred package manager like npm or yarn)
-
-A PostgreSQL database
-
-Installation
-Clone the repository:
-
-git clone [https://github.com/agamlatiff/invoice-app.git](https://github.com/agamlatiff/invoice-app.git)
-cd invoice-app
-
-Install dependencies:
-
-pnpm install
-
-Set up the database:
-
-Create a PostgreSQL database.
-
-Copy the .env.example file to a new file named .env:
-
-cp .env.example .env
-
-Update the DATABASE_URL in your .env file with your PostgreSQL connection string.
-
-Set up environment variables:
-Fill in the rest of the required variables in your .env file, including your email server credentials for NextAuth and your Mailtrap token.
-
-Push the database schema:
-This command will sync your Prisma schema with your database.
-
-pnpm prisma db push
-
-Generate Prisma Client:
-
-pnpm prisma generate
-
-Running the Development Server
-Start the Next.js development server:
-
+```bash
 pnpm dev
+```
 
-Open http://localhost:3000 in your browser to see the application.
+Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) with your browser to see the result.
 
-📂 Project Structure
-The project uses the Next.js App Router. Here's a brief overview of the key directories:
+## Project Structure
 
-/src/app/: Contains all the routes, pages, and core application logic.
+The project follows a standard Next.js `app` directory structure. Key directories include:
 
-/api/: API routes for authentication, PDF generation, and email.
+  - `src/app/`: Contains the core application logic, including pages, layouts, and components.
+      - `(auth)`: Authentication-related pages.
+      - `dashboard/`: The main dashboard and invoice management pages.
+      - `api/`: API routes for handling server-side logic such as authentication, email, and PDF generation.
+      - `components/`: Reusable React components used throughout the application.
+      - `utils/`: Utility functions for authentication, database connection, and data formatting.
+  - `prisma/`: Contains the database schema.
+  - `public/`: Static assets such as images and fonts.
 
-/dashboard/: Protected routes for the main application dashboard and invoice management.
+## Deployment
 
-/components/: Reusable React components used throughout the application.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-/utils/: Utility functions for authentication (auth.ts), database (db.ts), formatting, etc.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-/prisma/: Includes the schema.prisma file which defines the database models.
+## Learn More
 
-/public/: Static assets like images and fonts.
+To learn more about Next.js, take a look at the following resources:
 
-🚢 Deployment
-The easiest way to deploy this Next.js application is with the Vercel Platform.
+  - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+  - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-For more details on deployment, see the Next.js deployment documentation.
-
-🤝 Contributing
-Contributions are welcome! If you have suggestions for improving the application, feel free to fork the repository and submit a pull request.
-
-Fork the Project
-
-Create your Feature Branch (git checkout -b feature/AmazingFeature)
-
-Commit your Changes (git commit -m 'Add some AmazingFeature')
-
-Push to the Branch (git push origin feature/AmazingFeature)
-
-Open a Pull Request
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome\!
