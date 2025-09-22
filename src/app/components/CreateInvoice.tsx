@@ -28,7 +28,14 @@ import { parseWithZod } from "@conform-to/zod";
 import { invoiceSchema } from "../utils/zodSchemas";
 import { disabledDates, formatCurrency } from "../utils/format";
 
-const CreateInvoice = () => {
+interface iAppProps {
+  firstName: string;
+  lastName: string;
+  address: string;
+  email: string;
+}
+
+const CreateInvoice = ({ firstName, lastName, address, email }: iAppProps) => {
   const [lastResult, action] = useActionState(createInvoice, undefined);
   const [form, fields] = useForm({
     lastResult,
@@ -134,12 +141,14 @@ const CreateInvoice = () => {
                   name={fields.fromName.name}
                   key={fields.fromName.key}
                   placeholder="Your Name"
+                  defaultValue={`${firstName} ${lastName}`}
                 />
                 <p className="text-red-500 text-sm">{fields.fromName.errors}</p>
                 <Input
                   name={fields.fromEmail.name}
                   key={fields.fromEmail.key}
                   placeholder="Your Email"
+                  defaultValue={email}
                 />
                 <p className="text-red-500 text-sm">
                   {fields.fromEmail.errors}
@@ -148,6 +157,7 @@ const CreateInvoice = () => {
                   name={fields.fromAddress.name}
                   key={fields.fromAddress.key}
                   placeholder="Your Address"
+                  defaultValue={address}
                 />
                 <p className="text-red-500 text-sm">
                   {fields.fromAddress.errors}
