@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -5,14 +7,37 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {  CheckCircle, DownloadCloudIcon, Mail, MoreHorizontal, Pencil, Trash } from "lucide-react";
+import {
+  CheckCircle,
+  DownloadCloudIcon,
+  Mail,
+  MoreHorizontal,
+  Pencil,
+  Trash,
+} from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 interface iAppProps {
-  id : string
+  id: string;
 }
 
-const InvoiceActions = ({id} : iAppProps) => {
+const InvoiceActions = ({ id }: iAppProps) => {
+  const handleSendReminder = async () => {
+    toast.promise(
+      fetch(`/api/email/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      {
+        loading: "Sending reminder email...",
+        success: "Reminder email sent successfully",
+        error: "Failed to send reminder email",
+      }
+    );
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,25 +52,23 @@ const InvoiceActions = ({id} : iAppProps) => {
             Edit Invoice
           </Link>
         </DropdownMenuItem>
-         <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild>
           <Link href={`/api/invoice/${id}`} target="_blank">
             <DownloadCloudIcon className="size-4 mr-2" />
             Download Invoice
           </Link>
         </DropdownMenuItem>
-         <DropdownMenuItem asChild>
-          <Link href={""}>
-            <Mail className="size-4 mr-2" />
-            Reminder Email
-          </Link>
+        <DropdownMenuItem onClick={handleSendReminder}>
+          <Mail className="size-4 mr-2" />
+          Reminder Email
         </DropdownMenuItem>
-         <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild>
           <Link href={""}>
             <Trash className="size-4 mr-2" />
             Delete Invoice
           </Link>
         </DropdownMenuItem>
-         <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild>
           <Link href={""}>
             <CheckCircle className="size-4 mr-2" />
             Mark as Paid

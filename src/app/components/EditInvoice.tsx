@@ -62,7 +62,7 @@ const EditInvoice = ({data }: iAppProps) => {
             name={fields.date.name}
             value={selectedDate.toISOString()}
           />
-          {/* <input type="hidden" name="id" value={data.id} /> */}
+          <input type="hidden" name="id" value={data.id} />
 
           <input
             type="hidden"
