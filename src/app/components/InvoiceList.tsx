@@ -62,7 +62,7 @@ const InvoiceList = async () => {
               })}
             </TableCell>
             <TableCell>
-              <Badge>{invoice.status}</Badge>
+              <Badge className={`${invoice.status === 'PENDING' ? 'bg-yellow-500' : 'bg-green-500'} text-black-`}>{invoice.status}</Badge>
             </TableCell>
             <TableCell>
               {new Intl.DateTimeFormat("en-US", {
@@ -70,7 +70,7 @@ const InvoiceList = async () => {
               }).format(invoice.createdAt)}
             </TableCell>
             <TableCell className="text-right">
-              <InvoiceActions id={invoice.id} />
+              <InvoiceActions status={invoice.status} id={invoice.id} />
             </TableCell>
           </TableRow>
         ))}
